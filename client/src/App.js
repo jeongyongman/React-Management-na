@@ -8,17 +8,17 @@ import { TableRow } from '@mui/material';
 import { TableCell } from '@mui/material';
 import { TableBody } from '@mui/material';
 
-const styles = theme =>({
-  root: {
-    width : '100%',
-    // marginTop: theme.spacing(3),
-    marginTop: theme.spacing.unit * 3,
-    overflowX: "auto"
-  },
-  table:{
-    minWidth:1080,
-  }
-})
+// const styles = theme =>({
+//   root: {
+//     width : '100%',
+//     // marginTop: theme.spacing(3),
+//     marginTop: theme.spacing.unit * 3,
+//     overflowX: "auto"
+//   },
+//   table:{
+//     minWidth:1080,
+//   }
+// })
 
 const customers = [
 {
