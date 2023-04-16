@@ -7,26 +7,32 @@ import { TableHead } from '@mui/material';
 import { TableRow } from '@mui/material';
 import { TableCell } from '@mui/material';
 import { TableBody } from '@mui/material';
+import { CircularProgress } from '@mui/material';
+
+// import { makeStyles } from '@mui/material';
 
 // const styles = theme =>({
+// const useStyles = makeStyles(theme => ({
 //   root: {
 //     width : '100%',
-//     // marginTop: theme.spacing(3),
-//     marginTop: theme.spacing.unit * 3,
+//     marginTop: theme.spacing(3),
+//     // marginTop: theme.spacing.unit * 3,
 //     overflowX: "auto"
 //   },
 //   table:{
 //     minWidth:1080,
 //   }
-// })
+// }));
 
 class App extends Component {
 
   state = {
-    customers: ""
+    customers: "",
+    completed: 0
   }
 
   componentDidMount() {
+    this.timer = setInterval(this.progress, 20);
     this.callApi()
       .then(res => this.setState({customers: res}))
       .catch(err => console.log(err));
@@ -37,11 +43,18 @@ class App extends Component {
     const body = await response.json();
     return body;
   }
+
+  progress = () => {
+    const { completed } = this.state;
+    this.setState({ completed: completed >= 100 ? 0 : completed + 1 });
+  }
   
   render() {
-    const { classes } = this.props;
+    // const { classes } = this.props;
     return (
-      <Paper sx={{width : '100%', overflowX: "auto"}}>
+      // <Paper className={classes.root}>
+      //   <Table className={classes.table}>
+      <Paper sx={{width : '100%', mt: 3, overflowX: "auto"}}>
         <Table sx={{minWidth: '1080px'}}>
           <TableHead>
             <TableRow>
@@ -55,7 +68,14 @@ class App extends Component {
           </TableHead>
           <TableBody>
             {this.state.customers ? this.state.customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} />);
-          }) : ""}
+          }) : 
+          <TableRow>
+            <TableCell colSpan="6" align="center">
+              {/* <CircularProgress sx={{m: 2}} variant="determinate" value={this.state.completed}/> */}
+              <CircularProgress sx={{m: 2}} value={this.state.completed}/>
+            </TableCell>
+          </TableRow>
+          }
           </TableBody>
         </Table>
       </Paper>
@@ -63,4 +83,5 @@ class App extends Component {
   }
 }
 
+// export default withStyles(styles)(App);
 export default App;
