@@ -10,26 +10,28 @@ import { TableCell } from '@mui/material';
 import { TableBody } from '@mui/material';
 import { CircularProgress } from '@mui/material';
 
-// import { makeStyles } from '@mui/material';
-
-// const styles = theme =>({
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     width : '100%',
-//     marginTop: theme.spacing(3),
-//     // marginTop: theme.spacing.unit * 3,
-//     overflowX: "auto"
-//   },
-//   table:{
-//     minWidth:1080,
-//   }
-// }));
 
 class App extends Component {
 
-  state = {
-    customers: "",
-    completed: 0
+  constructor(props) {
+    super(props);
+    this.state = {
+      customers: "",
+      completed: 0
+    }
+  }
+  // state = {
+  //   customers: "",
+  //   completed: 0
+  // }
+  stateRefresh = () => {
+    this.setState({
+      customers: '',
+      completed: 0
+    });
+    this.callApi()
+      .then(res => this.setState({customers: res}))
+      .catch(err => console.log(err));
   }
 
   componentDidMount() {
@@ -79,7 +81,7 @@ class App extends Component {
             </TableBody>
           </Table>
         </Paper>
-        <CustomerAdd/>
+        <CustomerAdd stateRefresh={this.stateRefresh}/>
       </div>
 
     );

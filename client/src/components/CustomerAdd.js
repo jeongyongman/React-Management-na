@@ -17,9 +17,19 @@ class CustomerAdd extends React.Component {
   handleFormSubmit = (e) => {
     e.preventDefault()
     this.addCustomer()
-        .then((response) => {
-          console.log(response.data);
-        })
+      .then((response) => {
+        console.log(response.data,"추가하기누름");
+        this.props.stateRefresh();
+      })
+    this.setState({
+      file:null,
+      userName: '',
+      birthday: '',
+      gender: '',
+      job: '',
+      fileName: ''
+    })
+    
   }
 
   handleFileChange = (e) => {
@@ -38,6 +48,7 @@ class CustomerAdd extends React.Component {
   addCustomer = () => {
     const url = '/api/customers';
     const formData = new FormData();
+    // const formData = new URLSearchParams();
     formData.append('image', this.state.file);
     formData.append('name', this.state.userName);
     formData.append('birthday', this.state.birthday);
@@ -48,7 +59,7 @@ class CustomerAdd extends React.Component {
         'content-type': 'multipart/form-data'
       }
     }
-    return post(url, formData, config);
+    return post.post(url, formData, config);
   }
 
   render() {
